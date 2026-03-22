@@ -9,7 +9,7 @@ export default function BookHotels({ user }) {
   const nav = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:3002/api/inventory/hotels')
+    fetch('/api/inventory/hotels')
       .then(res => res.json())
       .then(data => setHotels(data));
   }, []);
@@ -45,7 +45,7 @@ export default function BookHotels({ user }) {
     };
 
     try {
-      const res = await fetch('http://localhost:3002/api/bookings', {
+      const res = await fetch('/api/bookings', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(bookingPayload)

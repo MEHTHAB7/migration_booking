@@ -8,7 +8,7 @@ export default function BookAirlines({ user }) {
   const nav = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:3002/api/inventory/airlines')
+    fetch('/api/inventory/airlines')
       .then(res => res.json())
       .then(data => setAirlines(data));
   }, []);
@@ -39,7 +39,7 @@ export default function BookAirlines({ user }) {
     };
 
     try {
-      const res = await fetch('http://localhost:3002/api/bookings', {
+      const res = await fetch('/api/bookings', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(bookingPayload)

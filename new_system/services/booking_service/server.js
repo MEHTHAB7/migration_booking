@@ -3,10 +3,14 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const fs = require('fs');
+const path = require('path');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Serve production static files from the React dist folder seamlessly
+app.use(express.static(path.join(__dirname, '../../frontend/dist')));
 
 // User Auth Schema
 const UserSchema = new mongoose.Schema({
@@ -151,6 +155,11 @@ app.delete('/api/bookings/clean', async (req, res) => {
     }
 });
 
+// Serve the React application for any other unspecified routes (React Router)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
+});
+
 // Boot NoSQL Server
 async function startServer() {
     const mongoServer = await MongoMemoryServer.create();
@@ -175,9 +184,9 @@ async function startServer() {
     });
     await sampleAirline.save();
 
-    const PORT = 3002;
+    const PORT = process.env.PORT || 3002;
     app.listen(PORT, () => {
-        console.log(`New System API running on http://localhost:${PORT}`);
+        console.log(`Universal Travel System running securely on port ${PORT}`);
     });
 }
 

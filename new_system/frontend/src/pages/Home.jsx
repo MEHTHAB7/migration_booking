@@ -15,7 +15,7 @@ export default function Home() {
       if (searchTerm) qs.append('familyName', searchTerm);
       if (filterType) qs.append('type', filterType);
       
-      const res = await fetch(`http://localhost:3002/api/bookings?${qs.toString()}`);
+      const res = await fetch(`/api/bookings?${qs.toString()}`);
       const data = await res.json();
       setBookings(data.data || []);
     } catch (err) {
@@ -34,7 +34,7 @@ export default function Home() {
   const cleanDatabase = async () => {
     if (!confirm('Are you sure you want to clean the New System database?')) return;
     try {
-      await fetch('http://localhost:3002/api/bookings/clean', { method: 'DELETE' });
+      await fetch('/api/bookings/clean', { method: 'DELETE' });
       alert('Database cleaned successfully!');
       fetchBookings();
     } catch (err) { alert('Failed to clean DB'); }
