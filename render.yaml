@@ -2,6 +2,7 @@ services:
   - type: web
     name: universal-booking-system
     env: node
+        plan: free
     rootDir: new_system/services/booking_service
     # This unified command builds the static frontend, then installs backend dependencies!
     buildCommand: cd ../../frontend && npm install && npm run build && cd ../services/booking_service && npm install
