@@ -1,0 +1,15 @@
+{
+  "name": "booking-service",
+  "version": "1.0.0",
+  "description": "Modern Booking Microservice",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongoose": "^8.2.1",
+    "mongodb-memory-server": "^9.1.6"
+  }
+}

@@ -1,0 +1,6 @@
+node_modules/
+database.sqlite
+.mongo_uri
+npm-debug.log
+.DS_Store
+.env

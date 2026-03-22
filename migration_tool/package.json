@@ -1,0 +1,14 @@
+{
+  "name": "migration-tool",
+  "version": "1.0.0",
+  "description": "DB and API Migration logic",
+  "main": "migrate.js",
+  "scripts": {
+    "api": "node migrate.js api",
+    "db": "node migrate.js db"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.6",
+    "mongodb": "^6.3.0"
+  }
+}

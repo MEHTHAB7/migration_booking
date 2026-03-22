@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legacy Hotel System</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f0f0; margin: 0; padding: 20px; }
+        .header { background: #333; color: #fff; padding: 15px; border-radius: 5px; text-align: center; }
+        .table-container { margin-top: 20px; background: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background: #eee; }
+        .notice { color: red; font-weight: bold; margin-bottom: 10px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Legacy Hotel Booking System</h1>
+        <p>1 Booking = 1 Room</p>
+    </div>
+
+    <div class="table-container">
+        <div class="notice">Note: In this system, families have separate bookings for each room.</div>
+        <div id="loading">Loading bookings...</div>
+        <table id="bookings-table" class="hidden">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Family Name</th>
+                    <th>Hotel Name</th>
+                    <th>City</th>
+                    <th>Room Number</th>
+                    <th>Capacity / Guests</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        fetch('http://localhost:3001/api/bookings')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('loading').classList.add('hidden');
+                const table = document.getElementById('bookings-table');
+                table.classList.remove('hidden');
+                const tbody = table.querySelector('tbody');
+                
+                data.data.forEach(b => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${b.booking_id}</td>
+                        <td>${b.family_name}</td>
+                        <td>${b.hotel_name}</td>
+                        <td>${b.hotel_city}</td>
+                        <td>${b.room_number}</td>
+                        <td>${b.guest_count} / ${b.capacity}</td>
+                        <td>${b.start_date}</td>
+                        <td>${b.end_date}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(err => {
+                document.getElementById('loading').innerText = 'Error loading bookings';
+                console.error(err);
+            });
+    </script>
+</body>
+</html>
