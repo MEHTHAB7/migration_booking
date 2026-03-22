@@ -184,6 +184,16 @@ async function startServer() {
     });
     await sampleAirline.save();
 
+    // Render Live Demo: Hydrate in-memory DB with legacy data from JSON seed if empty
+    if (fs.existsSync(path.join(__dirname, 'seed.json'))) {
+        const seedData = JSON.parse(fs.readFileSync(path.join(__dirname, 'seed.json'), 'utf8'));
+        const count = await Booking.countDocuments();
+        if (count < 10) {
+            await Booking.insertMany(seedData);
+            console.log(`Seeded in-memory DB with ${seedData.length} complex legacy records from seed.json!`);
+        }
+    }
+
     const PORT = process.env.PORT || 3002;
     app.listen(PORT, () => {
         console.log(`Universal Travel System running securely on port ${PORT}`);
